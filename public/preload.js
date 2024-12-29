@@ -26,6 +26,10 @@ async function showDialog(dialogInfo) {
   await ipcRenderer.send("showDialog", dialogInfo);
 }
 
+async function notify(notificationInfo) {
+  await ipcRenderer.send("notification", notificationInfo);
+}
+
 async function getFolder() {
   return await ipcRenderer.invoke("selectDirectory");
 }
@@ -52,6 +56,7 @@ let electronBridge = {
   getFolder: getFolder,
   getFile: getFile,
   showDialog: showDialog,
+  notify: notify
 };
 
 let controlAppBridge = {

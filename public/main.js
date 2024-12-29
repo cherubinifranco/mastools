@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain, dialog } = require("electron");
 const path = require("path");
+const { Notification } = require("electron");
 
 const { sendReportsToClients, sendMailsToClients } = require("./mailSender");
 const { fetchDataFromXLSX, fetchSampleDataFromXLSX } = require("./fetchData");
@@ -10,7 +11,7 @@ autoUpdater.autoDownload = false;
 autoUpdater.autoInstallOnAppQuit = true;
 
 let mainWindow;
-
+const DEVELOPMENT = true;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -27,11 +28,14 @@ function createWindow() {
     },
   });
 
-  const windowURL = false
-    ? `file://${path.join(__dirname, "../build/index.html")}`
-    : "http://localhost:3000/";
+  const windowURL = DEVELOPMENT
+    ? "http://localhost:3000/"
+    : `file://${path.join(__dirname, "../build/index.html")}`;
 
-    mainWindow.loadURL(windowURL);
+  if (DEVELOPMENT) {
+    mainWindow.webContents.openDevTools()
+  }
+  mainWindow.loadURL(windowURL);
   ipcMain.on("closeApp", () => {
     mainWindow.close();
   });
@@ -120,9 +124,58 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  app.setAppUserModelId("Mas Tools")
   createWindow();
+  setTimeout(() => {
+    autoUpdater.checkForUpdates();
+    if(DEVELOPMENT){
+      showNotification("Test Notification", "Notiications works as expected")
+    }
+  }, "3000");
 });
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
 });
+
+
+ipcMain.on('notification', (event, {title, body}) => {
+  showNotification(title, body)
+});
+
+
+autoUpdater.on("update-available", (info) => {
+  autoUpdater.downloadUpdate();
+  showNotification("Update detected", "Downloading the latest features.")
+});
+
+autoUpdater.on("update-not-available", (info) => {
+  console.log(info);
+});
+
+
+autoUpdater.on('download-progress', (progress) => {
+  const percentage = progress.percent / 100;
+  updateTaskbarProgress(percentage);
+});
+
+autoUpdater.on("update-downloaded", (info) => {
+  mainWindow.setProgressBar(-1);
+  showNotification("Installation Complete", "Please restart the app to finish updating.")
+});
+
+autoUpdater.on("error", (info) => {
+  if(replyUpdate){
+    showNotification("No updates found", "Good news! You’re already on the newest version.")
+  }
+  console.log(info);
+});
+
+
+function showNotification(title, body) {
+  new Notification({
+    title: title,
+    body: body,
+    icon: path.join(__dirname, '../icon.png')
+  }).show();
+}

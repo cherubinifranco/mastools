@@ -44,7 +44,9 @@ export async function getFile() {
   if (filePath == undefined) return "";
   return filePath;
 }
-
+export async function nofify(notificationInfo) {
+  window.electronAPI.nofify(notificationInfo)
+}
 async function verifyMailInfo(mailInfo) {
   if (
     [mailInfo.mailConfig.mail, mailInfo.mailConfig.password].some(

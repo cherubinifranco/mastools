@@ -5,16 +5,37 @@
   "author": "Franco Cherubini",
   "description": "App to send automatic emails based on a XLSX file",
   "private": true,
+  "repository": "https://github.com/cherubinifranco/mas-tools-update",
+  "publish": {
+    "provider": "github",
+    "private": true,
+    "owner": "cherubinifranco",
+    "repo": "mas-tools-update",
+    "releaseType": "release"
+  },
+  "build": {
+    "appId": "com.mastools",
+    "artifactName": "Mastools-Setup-${version}.${ext}",
+    "files": [
+      "**/*",
+      "build"
+    ],
+    "win": {
+      "icon": "/icon.ico",
+      "target": "nsis"
+    }
+  },
   "scripts": {
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "start": "electron .",
-    "package": "electron-forge package",
+    "py": "python ./public/hey_bistro.py",
     "make": "electron-forge make"
   },
   "main": "public/main.js",
   "homepage": "./",
   "dependencies": {
+    "electron-builder": "^25.1.8",
     "electron-squirrel-startup": "^1.0.0",
     "electron-updater": "^6.3.9",
     "nodemailer": "^6.9.5",
@@ -33,7 +54,7 @@
     "@electron-forge/maker-squirrel": "^6.4.2",
     "@electron-forge/maker-zip": "^6.4.2",
     "@electron-forge/plugin-auto-unpack-natives": "^6.4.2",
-    "electron": "^26.2.1",
+    "electron": "^26.6.10",
     "tailwindcss": "^3.4.1"
   },
   "browserslist": {

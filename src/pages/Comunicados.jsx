@@ -4,6 +4,7 @@ import {
   sendMails,
   loadTemplateDataFromXlsx,
   addAudit,
+  nofify
 } from "../utils";
 import FormItem from "../components/FormItem";
 import MailsTable from "../components/MailsTable";
@@ -107,12 +108,14 @@ export default function ComunicadosPage() {
 
     localStorage.setItem("clientErrorsComunicado", JSON.stringify(errors));
     localStorage.setItem("sendedMailsComunicado", JSON.stringify(sendedMails));
+    nofify({title: "Envio con exito", body:`Se enviaron con exito ${sendedMails.length} de ${sendedMails.length + errors.length} mails`})
     toggleModal("Se enviaron con exito los mails", TYPES.SUCCESS);
     addAudit({
       title: "Envio de Comunicados",
       body: `Envio con ${sendedMails.length} resultados positivos y ${errors.length} resultados negativos`,
       extra: errors,
     });
+    
   }
 
   return (
