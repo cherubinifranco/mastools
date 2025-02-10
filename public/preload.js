@@ -55,7 +55,6 @@ let electronBridge = {
   sendMailsInfo: sendMailsInfo,
   getFolder: getFolder,
   getFile: getFile,
-  showDialog: showDialog,
   notify: notify
 };
 
