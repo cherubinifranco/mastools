@@ -11,7 +11,7 @@ autoUpdater.autoDownload = false;
 autoUpdater.autoInstallOnAppQuit = true;
 
 let mainWindow;
-const DEVELOPMENT = true;
+const isDev = false;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -19,7 +19,7 @@ function createWindow() {
     height: 720,
     minHeight: 500,
     minWidth: 520,
-    frame: false,
+    frame: true,
     webPreferences: {
       preload: path.join(__dirname, "/preload.js"),
       devTools: true,
@@ -28,11 +28,12 @@ function createWindow() {
     },
   });
 
-  const windowURL = DEVELOPMENT
+  const windowURL = isDev
     ? "http://localhost:3000/"
     : `file://${path.join(__dirname, "../build/index.html")}`;
 
-  if (DEVELOPMENT) {
+  mainWindow.removeMenu()
+  if (isDev) {
     mainWindow.webContents.openDevTools()
   }
   mainWindow.loadURL(windowURL);
@@ -128,7 +129,7 @@ app.whenReady().then(() => {
   createWindow();
   setTimeout(() => {
     autoUpdater.checkForUpdates();
-    if(DEVELOPMENT){
+    if(isDev){
       showNotification("Test Notification", "Notiications works as expected")
     }
   }, "3000");
@@ -156,7 +157,7 @@ autoUpdater.on("update-not-available", (info) => {
 
 autoUpdater.on('download-progress', (progress) => {
   const percentage = progress.percent / 100;
-  updateTaskbarProgress(percentage);
+  mainWindow.setProgressBar(percentage);
 });
 
 autoUpdater.on("update-downloaded", (info) => {

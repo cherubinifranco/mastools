@@ -45,7 +45,7 @@ export async function getFile() {
   return filePath;
 }
 export async function nofify(notificationInfo) {
-  window.electronAPI.nofify(notificationInfo)
+  await window.electronAPI.notify(notificationInfo)
 }
 async function verifyMailInfo(mailInfo) {
   if (
@@ -67,10 +67,6 @@ async function verifyMailInfo(mailInfo) {
   }
 
   return false;
-}
-
-export async function displayDialog(info) {
-  await window.electronAPI.showDialog(info);
 }
 
 export async function sendTicket(mailInfo) {

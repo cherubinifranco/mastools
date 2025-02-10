@@ -60,8 +60,7 @@ export default function ReportesPage() {
   };
 
   const showSending = () => {
-    updateModal(true) 
-    updateContent(<h1 className="p-4">Los mails se estan mandando</h1>)
+    toggleModal("Los mails se estan mandando", TYPES.LOADING);
    }
 
   async function updateXLSX() {
@@ -102,7 +101,7 @@ export default function ReportesPage() {
       message,
     };
     showSending()
-    toggleModal("Se estan enviando los mails", TYPES.SUCCESS);
+    toggleModal("Se estan enviando los mails", TYPES.LOADING);
     const data = await sendReports(mailInfo);
     if (typeof data == "string") {
       toggleModal(data, TYPES.WARNING);
