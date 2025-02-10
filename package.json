@@ -1,5 +1,5 @@
 {
-  "version": "2.3.1",
+  "version": "2.3.2",
   "name": "mas-tools",
   "productName": "MAS Tools",
   "author": "Franco Cherubini",
@@ -20,6 +20,7 @@
       "**/*",
       "build"
     ],
+    "extends": null, 
     "win": {
       "icon": "/icon.ico",
       "target": "nsis"
@@ -29,13 +30,11 @@
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "start": "electron .",
-    "py": "python ./public/hey_bistro.py",
-    "make": "electron-forge make"
+    "dist": "electron-builder"
   },
   "main": "public/main.js",
   "homepage": "./",
   "dependencies": {
-    "electron-builder": "^25.1.8",
     "electron-squirrel-startup": "^1.0.0",
     "electron-updater": "^6.3.9",
     "nodemailer": "^6.9.5",
@@ -44,17 +43,11 @@
     "react-dom": "18.2.0",
     "react-router": "^6.14.1",
     "react-router-dom": "^6.14.1",
-    "react-scripts": "5.0.1",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.4.2",
-    "@electron-forge/maker-deb": "^6.4.2",
-    "@electron-forge/maker-rpm": "^6.4.2",
-    "@electron-forge/maker-squirrel": "^6.4.2",
-    "@electron-forge/maker-zip": "^6.4.2",
-    "@electron-forge/plugin-auto-unpack-natives": "^6.4.2",
     "electron": "^26.6.10",
+    "electron-builder": "^25.1.8",
     "tailwindcss": "^3.4.1"
   },
   "browserslist": {
