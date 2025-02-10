@@ -8,9 +8,8 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <main className="[&::-webkit-scrollbar]:hidden root">
-      <NavBar />
       <SideMenu />
-      <div className="flex flex-col ml-6 mt-6 items-center">
+      <div className="flex flex-col ml-6 items-center">
         <App />
       </div>
     </main>
