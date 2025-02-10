@@ -100,9 +100,10 @@ async function sendReportsToClients(clientData, mailContent, ownVariables) {
   const HOST = mailContent.mailConfig.host || "smtp.gmail.com";
   const MAIL = mailContent.mailConfig.mail;
   const PASSWORD = mailContent.mailConfig.password;
-  const CARPETA_PDFS = mailContent.pdfPath;
+  const CARPETA_PDFS = mailContent.pdfsPath;
   const CARPETA_FACTURAS = mailContent.facturasPath;
   const ABONO_MIN = mailContent.abonoMin;
+
 
   const transporter = nodemailer.createTransport({
     host: HOST,
